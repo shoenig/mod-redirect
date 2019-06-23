@@ -1,0 +1,10 @@
+{
+	"web_server":{
+	},
+	"storage": {
+		"boltdb": {
+			"filepath": "/tmp/mod-redirect.test.db"
+		}
+	}
+}
+

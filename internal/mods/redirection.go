@@ -5,6 +5,8 @@ import (
 	"strings"
 )
 
+// Redirection is the representation of a go-get redirect that should be
+// observed by a requesting entity (e.g. the Go compiler).
 type Redirection struct {
 	Kind        string `json:"kind"`
 	Name        string `json:"name"`
