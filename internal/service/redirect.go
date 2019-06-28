@@ -27,10 +27,19 @@ func NewRedirect(configuration config.Configuration) *Redirect {
 		initWeb,
 	} {
 		if err := f(r); err != nil {
-			r.log.Errorf("faield to initialize proxy")
+			r.log.Errorf("failed to initialize proxy: %v", err)
 			os.Exit(1)
 		}
 	}
 
 	return r
+}
+
+// Start the thing.
+func (r *Redirect) Start() {
+	r.log.Infof("--- starting! ---")
+	// the web server is already running
+	select {
+	// intentionally left blank
+	}
 }

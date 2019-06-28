@@ -34,7 +34,9 @@ func (s WebServer) Server(mux http.Handler) (*http.Server, error) {
 		return nil, ErrNoBindAddress
 	}
 
-	if s.Port <= 0 || s.Port > 1024 {
+	fmt.Println("port:", s.Port)
+
+	if s.Port <= 1024 {
 		return nil, ErrPortRange
 	}
 

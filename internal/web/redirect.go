@@ -27,7 +27,7 @@ func newRedirectEP(store store.Storage) http.Handler {
 }
 
 func (h *redirectEP) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	h.log.Infof("serving a request!")
+	h.log.Infof("not yet implemented!")
 }
 
 func (h *redirectEP) get(r *http.Request) {

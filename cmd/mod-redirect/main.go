@@ -9,6 +9,7 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/shoenig/mod-redirect/config"
+	"github.com/shoenig/mod-redirect/internal/service"
 )
 
 func main() {
@@ -19,12 +20,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println("cfg:", cfg)
-
-	// 	redirect := service.NewRedirect(cfg)
-	// 	_ = redirect
-	// Run()
-
+	redirect := service.NewRedirect(cfg)
+	redirect.Start()
 }
 
 func parse(flags *flag.FlagSet, args []string) (config.Configuration, error) {
@@ -52,6 +49,5 @@ func parse(flags *flag.FlagSet, args []string) (config.Configuration, error) {
 		return configuration, errors.Wrap(err, "unable to unmarshal config file")
 	}
 
-	// read file or something
 	return configuration, nil
 }

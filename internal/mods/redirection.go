@@ -8,10 +8,10 @@ import (
 // Redirection is the representation of a go-get redirect that should be
 // observed by a requesting entity (e.g. the Go compiler).
 type Redirection struct {
-	Kind        string `json:"kind"`
-	Name        string `json:"name"`
-	VCS         string `json:"vcs"`
-	Destination string `json:"destination"`
+	Kind        string `json:"kind"`        // i.e. cmds or pkgs
+	Namespace   string `json:"namespace"`   // e.g. foo/bar/baz
+	VCS         string `json:"vcs"`         // i.e. git, https, hg
+	Destination string `json:"destination"` // e.g. github.com/foo/bar
 }
 
 func Key(kind, module string) []byte {
@@ -21,7 +21,7 @@ func Key(kind, module string) []byte {
 }
 
 func (r *Redirection) Key() []byte {
-	return Key(r.Kind, r.Name)
+	return Key(r.Kind, r.Namespace)
 }
 
 func (r *Redirection) Bytes() []byte {

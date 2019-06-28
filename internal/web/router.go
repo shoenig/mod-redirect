@@ -13,17 +13,17 @@ const (
 )
 
 func Set(
-	serveMux *http.ServeMux,
+	serveMux *mux.Router,
 	storage store.Storage,
 ) {
 	sub := mux.NewRouter()
 
+	// needs to be protected with a key or something
+	sub.Handle("/v1/set", newNewEP(storage)).Methods(post)
+
 	// namespace something like pkgs, cmds, src, etc.
 	// or whatever your heart desires
 	sub.Handle("/{namespace}/{module}", newRedirectEP(storage)).Methods(get)
-
-	// implement this laterz
-	// sub.Handle("/v1/set", newSetEP()).Methods(post)
 
 	serveMux.Handle("/", sub)
 }
