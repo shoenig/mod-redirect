@@ -1,6 +1,9 @@
 package tools
 
+// tools for go:generate statements
+
 import (
-	// minimock for test mock generation
 	_ "github.com/gojuno/minimock"
+
+	_ "github.com/shoenig/petrify/v4"
 )
