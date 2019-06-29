@@ -29,10 +29,16 @@ func initWeb(r *Redirect) error {
 	r.log.Tracef("setting up web server @ %s", r.config.WebServer.Address())
 
 	domain := r.config.Redirects.Domain
+	if domain == "" {
+		return errors.New("domain must be specified")
+	}
 
 	header := r.config.Authentication.Header
 	keys := r.config.Authentication.Keys
 	sk := web.NewSharedKey(header, keys)
+	if header == "" {
+		return errors.New("header must be specified")
+	}
 
 	router := mux.NewRouter()
 	web.Set(router, domain, r.storage, sk)

@@ -20,6 +20,7 @@ var (
 	ErrMissingNamespace   = errors.New("namespace field must not be empty")
 	ErrMissingVCS         = errors.New("vcs field must not be empty")
 	ErrMissingDestination = errors.New("destination field must not be empty")
+	ErrMissingProtocol    = errors.New("protocol in destination is required")
 )
 
 func Valid(r *Redirection) error {
@@ -37,6 +38,10 @@ func Valid(r *Redirection) error {
 
 	if r.Destination == "" {
 		return ErrMissingDestination
+	}
+
+	if !strings.Contains(r.Destination, "://") {
+		return ErrMissingProtocol
 	}
 
 	return nil

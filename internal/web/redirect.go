@@ -83,6 +83,10 @@ func (h *redirectEP) render(redirection *mods.Redirection) (string, error) {
 	var content bytes.Buffer
 	if err := h.html.Execute(&content, redirectPage{
 		Domain: h.domain,
+		Kind:   redirection.Kind,
+		Named:  redirection.Namespace,
+		VCS:    redirection.VCS,
+		Source: redirection.Destination,
 	}); err != nil {
 		return "", err
 	}

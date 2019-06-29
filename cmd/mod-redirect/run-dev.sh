@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-go clean
 go generate
 go build
 
