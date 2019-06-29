@@ -19,7 +19,7 @@ func Set(
 
 	// needs to be protected with a key or something
 	sub.Handle("/v1/set", newNewEP(storage)).Methods(post)
-	// sub.Handle("/v1/list", newListEP(storage)).Methods(get)
+	sub.Handle("/v1/list", newListEP(storage)).Methods(get)
 
 	// namespace something like pkgs, cmds, src, etc.
 	// the module could be anything after that (word characters and slash)

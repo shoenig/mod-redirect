@@ -17,7 +17,7 @@ type newEP struct {
 func newNewEP(store store.Storage) http.Handler {
 	return &newEP{
 		store: store,
-		log:   loggy.New("new-redirct"),
+		log:   loggy.New("new-ep"),
 	}
 }
 
@@ -30,8 +30,6 @@ func msg(err error) string {
 
 func (h *newEP) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// e.g. POST /v1/new -d <mods.Redirection>
-
-	// todo: need some semblance of security
 
 	code, err := h.post(r)
 	http.Error(w, msg(err), code)

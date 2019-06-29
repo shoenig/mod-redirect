@@ -14,6 +14,7 @@ import (
 type Storage interface {
 	Set(*mods.Redirection) error
 	Get(string, string) (*mods.Redirection, error)
+	List() ([]*mods.Redirection, error)
 }
 
 type boltDB struct {
@@ -86,4 +87,24 @@ func (b *boltDB) Get(kind, module string) (*mods.Redirection, error) {
 
 	err := json.Unmarshal(content, &redirect)
 	return &redirect, err
+}
+
+func (b *boltDB) List() ([]*mods.Redirection, error) {
+	var redirects []*mods.Redirection
+
+	if err := b.db.View(func(tx *bolt.Tx) error {
+		redirectBkt := tx.Bucket(redirectBktLbl)
+		return redirectBkt.ForEach(func(_, v []byte) error {
+			var redirect mods.Redirection
+			if err := json.Unmarshal(v, &redirect); err != nil {
+				return err
+			}
+			redirects = append(redirects, &redirect)
+			return nil
+		})
+	}); err != nil {
+		return nil, err
+	}
+
+	return redirects, nil
 }
