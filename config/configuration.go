@@ -18,8 +18,14 @@ const (
 )
 
 type Configuration struct {
-	WebServer WebServer `json:"web_server"`
-	Storage   Storage   `json:"storage"`
+	WebServer      WebServer      `json:"web_server"`
+	Authentication Authentication `json:"authentication"`
+	Storage        Storage        `json:"storage"`
+}
+
+type Authentication struct {
+	Header string   `json:"header"`
+	Keys   []string `json:"keys"`
 }
 
 type WebServer struct {

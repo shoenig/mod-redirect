@@ -56,7 +56,7 @@ func (h *redirectEP) get(r *http.Request) (int, error) {
 
 	h.log.Infof("redirect %s/%s -> %s", namespace, module, redirection)
 
-	// generate redirect html
+	// todo: generate redirect html
 
 	return http.StatusOK, nil
 }

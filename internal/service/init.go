@@ -5,7 +5,9 @@ import (
 	"os"
 
 	"github.com/gorilla/mux"
+
 	"github.com/pkg/errors"
+
 	"github.com/shoenig/mod-redirect/internal/store"
 	"github.com/shoenig/mod-redirect/internal/web"
 )
@@ -26,8 +28,12 @@ func initStore(r *Redirect) error {
 func initWeb(r *Redirect) error {
 	r.log.Tracef("setting up web server @ %s", r.config.WebServer.Address())
 
+	header := r.config.Authentication.Header
+	keys := r.config.Authentication.Keys
+	sk := web.NewSharedKey(header, keys)
+
 	router := mux.NewRouter()
-	web.Set(router, r.storage)
+	web.Set(router, r.storage, sk)
 
 	server, err := r.config.WebServer.Server(router)
 	if err != nil {

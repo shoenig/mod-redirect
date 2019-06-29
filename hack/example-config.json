@@ -1,9 +1,13 @@
 {
-	"web_server":{
+	"web_server": {
 		"bind_address": "0.0.0.0",
 		"port": 8080,
 		"read_timeout_ms": 3000,
 		"write_timeout_ms": 3000
+	},
+	"authentication": {
+		"header": "X-MR-Key",
+		"keys": ["abc123", "passw0rd"]
 	},
 	"storage": {
 		"boltdb": {
@@ -11,4 +15,3 @@
 		}
 	}
 }
-
