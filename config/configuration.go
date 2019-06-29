@@ -18,9 +18,14 @@ const (
 )
 
 type Configuration struct {
+	Redirects      Redirects      `json:"redirects"`
 	WebServer      WebServer      `json:"web_server"`
 	Authentication Authentication `json:"authentication"`
 	Storage        Storage        `json:"storage"`
+}
+
+type Redirects struct {
+	Domain string `json:"domain"`
 }
 
 type Authentication struct {

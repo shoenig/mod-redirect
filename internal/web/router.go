@@ -15,6 +15,7 @@ const (
 
 func Set(
 	router *mux.Router,
+	domain string,
 	storage store.Storage,
 	checker *SharedKey,
 ) {
@@ -24,7 +25,7 @@ func Set(
 
 	// namespace something like pkgs, cmds, src, etc.
 	// the module could be anything after that (word characters and slash)
-	router.Handle(`/{namespace}/{module:[a-zA-Z0-9/_-]+}`, newRedirectEP(storage)).Methods(get)
+	router.Handle(`/{namespace}/{module:[a-zA-Z0-9/_-]+}`, newRedirectEP(domain, storage)).Methods(get)
 }
 
 func setter(storage store.Storage, checker *SharedKey) http.Handler {

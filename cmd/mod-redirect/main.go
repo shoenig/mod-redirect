@@ -8,9 +8,13 @@ import (
 	"os"
 
 	"github.com/pkg/errors"
+
 	"github.com/shoenig/mod-redirect/config"
 	"github.com/shoenig/mod-redirect/internal/service"
 )
+
+// generate HTML static file(s)
+//go:generate go run github.com/shoenig/petrify/v4/cmd/petrify -prefix ../../ -o ../../static/generated.go -pkg static ../../static/...
 
 func main() {
 	flagSet := flag.NewFlagSet("configuration-flags", flag.ExitOnError)

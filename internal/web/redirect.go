@@ -1,29 +1,43 @@
 package web
 
 import (
+	"bytes"
+	"errors"
 	"html/template"
 	"net/http"
 
 	"github.com/shoenig/extractors/urlpath"
 	"github.com/shoenig/loggy"
+	"github.com/shoenig/mod-redirect/internal/mods"
 	"github.com/shoenig/mod-redirect/internal/store"
+	"github.com/shoenig/mod-redirect/static"
 )
 
 type redirectPage struct {
+	Domain string
+	Kind   string
 	Named  string
+	VCS    string
 	Source string
 }
 
 type redirectEP struct {
-	html  *template.Template
-	store store.Storage
-	log   loggy.Logger
+	html   *template.Template
+	domain string
+	store  store.Storage
+	log    loggy.Logger
 }
 
-func newRedirectEP(store store.Storage) http.Handler {
+func newRedirectEP(domain string, store store.Storage) http.Handler {
+	html := static.MustParseTemplates(
+		"static/html/goget.html",
+	)
+
 	return &redirectEP{
-		store: store,
-		log:   loggy.New("redirect"),
+		html:   html,
+		domain: domain,
+		store:  store,
+		log:    loggy.New("redirect"),
 	}
 }
 
@@ -56,7 +70,21 @@ func (h *redirectEP) get(r *http.Request) (int, error) {
 
 	h.log.Infof("redirect %s/%s -> %s", namespace, module, redirection)
 
-	// todo: generate redirect html
+	response, err := h.render(redirection)
+	if err != nil {
+		h.log.Errorf("unable to render response: %v", err)
+		return http.StatusInternalServerError, err
+	}
 
-	return http.StatusOK, nil
+	return http.StatusOK, errors.New(response)
+}
+
+func (h *redirectEP) render(redirection *mods.Redirection) (string, error) {
+	var content bytes.Buffer
+	if err := h.html.Execute(&content, redirectPage{
+		Domain: h.domain,
+	}); err != nil {
+		return "", err
+	}
+	return content.String(), nil
 }
