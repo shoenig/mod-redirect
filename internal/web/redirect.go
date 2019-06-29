@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"net/http"
 
+	"github.com/shoenig/extractors/urlpath"
 	"github.com/shoenig/loggy"
 	"github.com/shoenig/mod-redirect/internal/store"
 )
@@ -27,18 +28,35 @@ func newRedirectEP(store store.Storage) http.Handler {
 }
 
 func (h *redirectEP) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	h.log.Infof("not yet implemented!")
+	code, err := h.get(r)
+	http.Error(w, msg(err), code)
 }
 
-func (h *redirectEP) get(r *http.Request) {
-	// need to open source this first ...
-	// var ns, pkg string
-	// if err := gorilla.Parse(r, gorilla.Schema {
-	//
-	// })
-	//
-	//
-	// r.URL.Path
-	// get the namespace and module from r.Path
-	// h.store.Get()
+func (h *redirectEP) get(r *http.Request) (int, error) {
+	// e.g. GET example.com/pkgs/foo/bar
+
+	var (
+		namespace string
+		module    string
+	)
+
+	if err := urlpath.Parse(r, urlpath.Schema{
+		"namespace": urlpath.String(&namespace),
+		"module":    urlpath.String(&module),
+	}); err != nil {
+		h.log.Errorf("unable to extract module: %v", err)
+		return http.StatusBadRequest, err
+	}
+
+	redirection, err := h.store.Get(namespace, module)
+	if err != nil {
+		h.log.Errorf("unable to fetch redirection: %v", err)
+		return http.StatusInternalServerError, err
+	}
+
+	h.log.Infof("redirect %s/%s -> %s", namespace, module, redirection)
+
+	// generate redirect html
+
+	return http.StatusOK, nil
 }

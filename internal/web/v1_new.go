@@ -2,7 +2,6 @@ package web
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/shoenig/loggy"
@@ -30,7 +29,6 @@ func msg(err error) string {
 }
 
 func (h *newEP) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	h.log.Infof("hi")
 	// e.g. POST /v1/new -d <mods.Redirection>
 
 	// todo: need some semblance of security
@@ -40,14 +38,27 @@ func (h *newEP) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *newEP) post(r *http.Request) (int, error) {
-	// hello world
 
+	// extract the redirection from the request
 	var redirection mods.Redirection
 	if err := json.NewDecoder(r.Body).Decode(&redirection); err != nil {
+		h.log.Errorf("unable to decode request: %v", err)
 		return http.StatusBadRequest, err
 	}
 
-	fmt.Println("redirection:", redirection)
+	// make sure all the fields were provided
+	if err := mods.Valid(&redirection); err != nil {
+		h.log.Errorf("redirection not valid: %v", err)
+		return http.StatusBadRequest, err
+	}
+
+	// and now put it in the store
+	if err := h.store.Set(&redirection); err != nil {
+		h.log.Errorf("unable to save redirection: %v", err)
+		return http.StatusInternalServerError, err
+	}
+
+	h.log.Infof("added new redirection: %s", redirection)
 
 	return http.StatusOK, nil
 }

@@ -29,12 +29,14 @@ type WebServer struct {
 	WriteTimeoutMS int    `json:"write_timeout_ms"`
 }
 
+func (s WebServer) Address() string {
+	return fmt.Sprintf("%s:%d", s.BindAddress, s.Port)
+}
+
 func (s WebServer) Server(mux http.Handler) (*http.Server, error) {
 	if s.BindAddress == "" {
 		return nil, ErrNoBindAddress
 	}
-
-	fmt.Println("port:", s.Port)
 
 	if s.Port <= 1024 {
 		return nil, ErrPortRange

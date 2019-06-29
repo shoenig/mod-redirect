@@ -24,7 +24,7 @@ func initStore(r *Redirect) error {
 }
 
 func initWeb(r *Redirect) error {
-	r.log.Tracef("setting up web server")
+	r.log.Tracef("setting up web server @ %s", r.config.WebServer.Address())
 
 	router := mux.NewRouter()
 	web.Set(router, r.storage)

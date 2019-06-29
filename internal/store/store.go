@@ -30,10 +30,21 @@ func NewBoltDB(filepath string) (Storage, error) {
 		return nil, errors.Wrapf(err, "could not open storage")
 	}
 
+	if err := setup(db); err != nil {
+		return nil, err
+	}
+
 	return &boltDB{
 		filepath: filepath,
 		db:       db,
 	}, nil
+}
+
+func setup(db *bolt.DB) error {
+	return db.Update(func(tx *bolt.Tx) error {
+		_, err := tx.CreateBucketIfNotExists(redirectBktLbl)
+		return err
+	})
 }
 
 var (
@@ -44,7 +55,7 @@ func (b *boltDB) Set(r *mods.Redirection) error {
 	key := r.Key()
 	value := r.Bytes()
 
-	return b.db.View(func(tx *bolt.Tx) error {
+	return b.db.Update(func(tx *bolt.Tx) error {
 		redirectBkt := tx.Bucket(redirectBktLbl)
 		return redirectBkt.Put(key, value)
 	})

@@ -35,6 +35,8 @@ github.com/prometheus/client_model v0.0.0-20190129233127-fd36f4220a90/go.mod h1:
 github.com/prometheus/common v0.2.0/go.mod h1:TNfzLD0ON7rHzMJeJkieUDPYmFC7Snx/y86RQel1bk4=
 github.com/prometheus/procfs v0.0.0-20181005140218-185b4288413d/go.mod h1:c3At6R/oaqEKCNdg8wHV1ftS6bRYblBhIjjI8uT2IGk=
 github.com/prometheus/procfs v0.0.0-20190129233650-316cf8ccfec5/go.mod h1:c3At6R/oaqEKCNdg8wHV1ftS6bRYblBhIjjI8uT2IGk=
+github.com/shoenig/extractors v0.0.0 h1:bzMn6OPm+0TbgJfUsWCqbiGCiJUlCQ+Vgr23aH3AUf0=
+github.com/shoenig/extractors v0.0.0/go.mod h1:nR3oU6q2oIhBqu1PKwVMqb6h/j6LtNv+gxccTuY3wR0=
 github.com/shoenig/loggy v0.0.0 h1:LwzwRxCGvgxOzno7EYmzYlhBdC2n1bQNygyLz3NeKVw=
 github.com/shoenig/loggy v0.0.0/go.mod h1:UgJfiejuJAt4d/B8t+jybRDzvrOYia/8fcpGWIj8i7Y=
 github.com/sirupsen/logrus v1.2.0/go.mod h1:LxeOpSwHxABJmUn/MG1IvRgCAasNZTLOkJPxbbu5VWo=
