@@ -16,6 +16,7 @@ github.com/gojuno/minimock v2.1.7+incompatible/go.mod h1:9pxE9EHYvpexR1uxtJurppD
 github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
 github.com/gorilla/mux v1.7.1 h1:Dw4jY2nghMMRsh1ol8dv1axHkDwMQK2DHerMNJsIpJU=
 github.com/gorilla/mux v1.7.1/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2zaAs=
+github.com/hexdigest/gowrap v1.1.4 h1:+Y0aez3jHyxgeo1iwpSydfyt4ajq9ZE2eDysIBN8ExE=
 github.com/hexdigest/gowrap v1.1.4/go.mod h1:BJ3dVLFoWfoXxzpVf+q8UxFtPBz2j0RYwuELxA8qYOg=
 github.com/julienschmidt/httprouter v1.2.0/go.mod h1:SYymIcj16QtmaHHD7aYtjjsJG7VTCxuUUipMqKk8s4w=
 github.com/kisielk/errcheck v1.2.0 h1:reN85Pxc5larApoH1keMBiu2GWtPqXQ1nc9gx+jOU+E=
@@ -41,12 +42,12 @@ github.com/shoenig/extractors v0.0.0 h1:bzMn6OPm+0TbgJfUsWCqbiGCiJUlCQ+Vgr23aH3A
 github.com/shoenig/extractors v0.0.0/go.mod h1:nR3oU6q2oIhBqu1PKwVMqb6h/j6LtNv+gxccTuY3wR0=
 github.com/shoenig/loggy v0.0.0 h1:LwzwRxCGvgxOzno7EYmzYlhBdC2n1bQNygyLz3NeKVw=
 github.com/shoenig/loggy v0.0.0/go.mod h1:UgJfiejuJAt4d/B8t+jybRDzvrOYia/8fcpGWIj8i7Y=
-github.com/shoenig/petrify/v4 v4.2.0 h1:zT6i1eMG/l8uWrlsIreOnCrwPuXX3G4gacV1u4H2iQE=
-github.com/shoenig/petrify/v4 v4.2.0/go.mod h1:b89FOhyhZQN3Av042hXzf/Bj49MsR7kZzO3tgiYs2NM=
 github.com/sirupsen/logrus v1.2.0/go.mod h1:LxeOpSwHxABJmUn/MG1IvRgCAasNZTLOkJPxbbu5VWo=
 github.com/stretchr/objx v0.1.1/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.2.2 h1:bSDNvY7ZPG5RlJ8otE/7V6gMiyenm9RtJ7IUVIAoJ1w=
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
+go.gophers.dev/cmds/petrify/v5 v5.0.1 h1:iTR+wWlG4cTDWuhALnIYTvXwj060sTZPwomhUzozotw=
+go.gophers.dev/cmds/petrify/v5 v5.0.1/go.mod h1:vy01Iu0tqGXp2CjlA/jNMbGrq4k7eacpsfw5XW+Gn6M=
 golang.org/x/crypto v0.0.0-20180904163835-0709b304e793/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/lint v0.0.0-20181026193005-c67002cb31c3/go.mod h1:UVdnD1Gm6xHRNCYTkRU2/jEulfH38KcIWyp/GAMgvoE=

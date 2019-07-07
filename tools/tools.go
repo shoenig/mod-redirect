@@ -5,5 +5,5 @@ package tools
 import (
 	_ "github.com/gojuno/minimock"
 
-	_ "github.com/shoenig/petrify/v4"
+	_ "go.gophers.dev/cmds/petrify/v5"
 )

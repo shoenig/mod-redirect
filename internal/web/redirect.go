@@ -58,7 +58,7 @@ func (h *redirectEP) get(r *http.Request) (int, error) {
 		"namespace": urlpath.String(&namespace),
 		"module":    urlpath.String(&module),
 	}); err != nil {
-		h.log.Errorf("unable to extract module: %v", err)
+		h.log.Errorf("unable to extract module %s, %v", module, err)
 		return http.StatusBadRequest, err
 	}
 

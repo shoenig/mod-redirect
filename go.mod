@@ -9,5 +9,5 @@ require (
 	github.com/pkg/errors v0.8.1
 	github.com/shoenig/extractors v0.0.0
 	github.com/shoenig/loggy v0.0.0
-	github.com/shoenig/petrify/v4 v4.2.0
+	go.gophers.dev/cmds/petrify/v5 v5.0.1
 )

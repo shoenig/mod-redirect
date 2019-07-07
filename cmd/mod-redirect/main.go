@@ -14,7 +14,7 @@ import (
 )
 
 // generate HTML static file(s)
-//go:generate go run github.com/shoenig/petrify/v4/cmd/petrify -prefix ../../ -o ../../static/generated.go -pkg static ../../static/...
+//go:generate go run go.gophers.dev/cmds/petrify/v5/cmd/petrify -prefix ../../ -o ../../static/generated.go -pkg static ../../static/...
 
 func main() {
 	flagSet := flag.NewFlagSet("configuration-flags", flag.ExitOnError)
