@@ -6,10 +6,10 @@ import (
 
 	"github.com/boltdb/bolt"
 	"github.com/pkg/errors"
-	"github.com/shoenig/mod-redirect/internal/mods"
+	"gophers.dev/cmds/mod-redirect/internal/mods"
 )
 
-//go:generate go run github.com/gojuno/minimock/cmd/minimock -g -i Storage -s _mock.go
+//go:generate go run github.com/gojuno/minimock/v3/cmd/minimock -g -i Storage -s _mock.go
 
 type Storage interface {
 	Set(*mods.Redirection) error

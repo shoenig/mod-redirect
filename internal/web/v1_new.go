@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/shoenig/loggy"
-	"github.com/shoenig/mod-redirect/internal/mods"
-	"github.com/shoenig/mod-redirect/internal/store"
+	"gophers.dev/pkgs/loggy"
+	"gophers.dev/cmds/mod-redirect/internal/mods"
+	"gophers.dev/cmds/mod-redirect/internal/store"
 )
 
 type newEP struct {

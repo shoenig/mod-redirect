@@ -7,8 +7,8 @@ import (
 	mm_atomic "sync/atomic"
 	mm_time "time"
 
-	"github.com/gojuno/minimock"
-	"github.com/shoenig/mod-redirect/internal/mods"
+	"github.com/gojuno/minimock/v3"
+	"gophers.dev/cmds/mod-redirect/internal/mods"
 )
 
 // StorageMock implements Storage
@@ -16,16 +16,19 @@ type StorageMock struct {
 	t minimock.Tester
 
 	funcGet          func(s1 string, s2 string) (rp1 *mods.Redirection, err error)
+	inspectFuncGet   func(s1 string, s2 string)
 	afterGetCounter  uint64
 	beforeGetCounter uint64
 	GetMock          mStorageMockGet
 
 	funcList          func() (rpa1 []*mods.Redirection, err error)
+	inspectFuncList   func()
 	afterListCounter  uint64
 	beforeListCounter uint64
 	ListMock          mStorageMockList
 
 	funcSet          func(rp1 *mods.Redirection) (err error)
+	inspectFuncSet   func(rp1 *mods.Redirection)
 	afterSetCounter  uint64
 	beforeSetCounter uint64
 	SetMock          mStorageMockSet
@@ -98,6 +101,17 @@ func (mmGet *mStorageMockGet) Expect(s1 string, s2 string) *mStorageMockGet {
 	return mmGet
 }
 
+// Inspect accepts an inspector function that has same arguments as the Storage.Get
+func (mmGet *mStorageMockGet) Inspect(f func(s1 string, s2 string)) *mStorageMockGet {
+	if mmGet.mock.inspectFuncGet != nil {
+		mmGet.mock.t.Fatalf("Inspect function is already set for StorageMock.Get")
+	}
+
+	mmGet.mock.inspectFuncGet = f
+
+	return mmGet
+}
+
 // Return sets up results that will be returned by Storage.Get
 func (mmGet *mStorageMockGet) Return(rp1 *mods.Redirection, err error) *StorageMock {
 	if mmGet.mock.funcGet != nil {
@@ -151,15 +165,19 @@ func (mmGet *StorageMock) Get(s1 string, s2 string) (rp1 *mods.Redirection, err 
 	mm_atomic.AddUint64(&mmGet.beforeGetCounter, 1)
 	defer mm_atomic.AddUint64(&mmGet.afterGetCounter, 1)
 
-	params := &StorageMockGetParams{s1, s2}
+	if mmGet.inspectFuncGet != nil {
+		mmGet.inspectFuncGet(s1, s2)
+	}
+
+	mm_params := &StorageMockGetParams{s1, s2}
 
 	// Record call args
 	mmGet.GetMock.mutex.Lock()
-	mmGet.GetMock.callArgs = append(mmGet.GetMock.callArgs, params)
+	mmGet.GetMock.callArgs = append(mmGet.GetMock.callArgs, mm_params)
 	mmGet.GetMock.mutex.Unlock()
 
 	for _, e := range mmGet.GetMock.expectations {
-		if minimock.Equal(e.params, params) {
+		if minimock.Equal(e.params, mm_params) {
 			mm_atomic.AddUint64(&e.Counter, 1)
 			return e.results.rp1, e.results.err
 		}
@@ -167,17 +185,17 @@ func (mmGet *StorageMock) Get(s1 string, s2 string) (rp1 *mods.Redirection, err 
 
 	if mmGet.GetMock.defaultExpectation != nil {
 		mm_atomic.AddUint64(&mmGet.GetMock.defaultExpectation.Counter, 1)
-		want := mmGet.GetMock.defaultExpectation.params
-		got := StorageMockGetParams{s1, s2}
-		if want != nil && !minimock.Equal(*want, got) {
-			mmGet.t.Errorf("StorageMock.Get got unexpected parameters, want: %#v, got: %#v%s\n", *want, got, minimock.Diff(*want, got))
+		mm_want := mmGet.GetMock.defaultExpectation.params
+		mm_got := StorageMockGetParams{s1, s2}
+		if mm_want != nil && !minimock.Equal(*mm_want, mm_got) {
+			mmGet.t.Errorf("StorageMock.Get got unexpected parameters, want: %#v, got: %#v%s\n", *mm_want, mm_got, minimock.Diff(*mm_want, mm_got))
 		}
 
-		results := mmGet.GetMock.defaultExpectation.results
-		if results == nil {
+		mm_results := mmGet.GetMock.defaultExpectation.results
+		if mm_results == nil {
 			mmGet.t.Fatal("No results are set for the StorageMock.Get")
 		}
-		return (*results).rp1, (*results).err
+		return (*mm_results).rp1, (*mm_results).err
 	}
 	if mmGet.funcGet != nil {
 		return mmGet.funcGet(s1, s2)
@@ -284,6 +302,17 @@ func (mmList *mStorageMockList) Expect() *mStorageMockList {
 	return mmList
 }
 
+// Inspect accepts an inspector function that has same arguments as the Storage.List
+func (mmList *mStorageMockList) Inspect(f func()) *mStorageMockList {
+	if mmList.mock.inspectFuncList != nil {
+		mmList.mock.t.Fatalf("Inspect function is already set for StorageMock.List")
+	}
+
+	mmList.mock.inspectFuncList = f
+
+	return mmList
+}
+
 // Return sets up results that will be returned by Storage.List
 func (mmList *mStorageMockList) Return(rpa1 []*mods.Redirection, err error) *StorageMock {
 	if mmList.mock.funcList != nil {
@@ -316,14 +345,18 @@ func (mmList *StorageMock) List() (rpa1 []*mods.Redirection, err error) {
 	mm_atomic.AddUint64(&mmList.beforeListCounter, 1)
 	defer mm_atomic.AddUint64(&mmList.afterListCounter, 1)
 
+	if mmList.inspectFuncList != nil {
+		mmList.inspectFuncList()
+	}
+
 	if mmList.ListMock.defaultExpectation != nil {
 		mm_atomic.AddUint64(&mmList.ListMock.defaultExpectation.Counter, 1)
 
-		results := mmList.ListMock.defaultExpectation.results
-		if results == nil {
+		mm_results := mmList.ListMock.defaultExpectation.results
+		if mm_results == nil {
 			mmList.t.Fatal("No results are set for the StorageMock.List")
 		}
-		return (*results).rpa1, (*results).err
+		return (*mm_results).rpa1, (*mm_results).err
 	}
 	if mmList.funcList != nil {
 		return mmList.funcList()
@@ -427,6 +460,17 @@ func (mmSet *mStorageMockSet) Expect(rp1 *mods.Redirection) *mStorageMockSet {
 	return mmSet
 }
 
+// Inspect accepts an inspector function that has same arguments as the Storage.Set
+func (mmSet *mStorageMockSet) Inspect(f func(rp1 *mods.Redirection)) *mStorageMockSet {
+	if mmSet.mock.inspectFuncSet != nil {
+		mmSet.mock.t.Fatalf("Inspect function is already set for StorageMock.Set")
+	}
+
+	mmSet.mock.inspectFuncSet = f
+
+	return mmSet
+}
+
 // Return sets up results that will be returned by Storage.Set
 func (mmSet *mStorageMockSet) Return(err error) *StorageMock {
 	if mmSet.mock.funcSet != nil {
@@ -480,15 +524,19 @@ func (mmSet *StorageMock) Set(rp1 *mods.Redirection) (err error) {
 	mm_atomic.AddUint64(&mmSet.beforeSetCounter, 1)
 	defer mm_atomic.AddUint64(&mmSet.afterSetCounter, 1)
 
-	params := &StorageMockSetParams{rp1}
+	if mmSet.inspectFuncSet != nil {
+		mmSet.inspectFuncSet(rp1)
+	}
+
+	mm_params := &StorageMockSetParams{rp1}
 
 	// Record call args
 	mmSet.SetMock.mutex.Lock()
-	mmSet.SetMock.callArgs = append(mmSet.SetMock.callArgs, params)
+	mmSet.SetMock.callArgs = append(mmSet.SetMock.callArgs, mm_params)
 	mmSet.SetMock.mutex.Unlock()
 
 	for _, e := range mmSet.SetMock.expectations {
-		if minimock.Equal(e.params, params) {
+		if minimock.Equal(e.params, mm_params) {
 			mm_atomic.AddUint64(&e.Counter, 1)
 			return e.results.err
 		}
@@ -496,17 +544,17 @@ func (mmSet *StorageMock) Set(rp1 *mods.Redirection) (err error) {
 
 	if mmSet.SetMock.defaultExpectation != nil {
 		mm_atomic.AddUint64(&mmSet.SetMock.defaultExpectation.Counter, 1)
-		want := mmSet.SetMock.defaultExpectation.params
-		got := StorageMockSetParams{rp1}
-		if want != nil && !minimock.Equal(*want, got) {
-			mmSet.t.Errorf("StorageMock.Set got unexpected parameters, want: %#v, got: %#v%s\n", *want, got, minimock.Diff(*want, got))
+		mm_want := mmSet.SetMock.defaultExpectation.params
+		mm_got := StorageMockSetParams{rp1}
+		if mm_want != nil && !minimock.Equal(*mm_want, mm_got) {
+			mmSet.t.Errorf("StorageMock.Set got unexpected parameters, want: %#v, got: %#v%s\n", *mm_want, mm_got, minimock.Diff(*mm_want, mm_got))
 		}
 
-		results := mmSet.SetMock.defaultExpectation.results
-		if results == nil {
+		mm_results := mmSet.SetMock.defaultExpectation.results
+		if mm_results == nil {
 			mmSet.t.Fatal("No results are set for the StorageMock.Set")
 		}
-		return (*results).err
+		return (*mm_results).err
 	}
 	if mmSet.funcSet != nil {
 		return mmSet.funcSet(rp1)
