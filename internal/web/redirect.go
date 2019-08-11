@@ -6,11 +6,11 @@ import (
 	"html/template"
 	"net/http"
 
-	"github.com/shoenig/extractors/urlpath"
-	"github.com/shoenig/loggy"
-	"github.com/shoenig/mod-redirect/internal/mods"
-	"github.com/shoenig/mod-redirect/internal/store"
-	"github.com/shoenig/mod-redirect/static"
+	"gophers.dev/pkgs/extractors/urlpath"
+	"gophers.dev/pkgs/loggy"
+	"gophers.dev/cmds/mod-redirect/internal/mods"
+	"gophers.dev/cmds/mod-redirect/internal/store"
+	"gophers.dev/cmds/mod-redirect/static"
 )
 
 type redirectPage struct {

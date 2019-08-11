@@ -1,13 +1,13 @@
-module github.com/shoenig/mod-redirect
+module gophers.dev/cmds/mod-redirect
 
 go 1.12
 
 require (
 	github.com/boltdb/bolt v1.3.1
-	github.com/gojuno/minimock v2.1.7+incompatible
+	github.com/gojuno/minimock/v3 v3.0.1
 	github.com/gorilla/mux v1.7.1
 	github.com/pkg/errors v0.8.1
-	github.com/shoenig/extractors v0.0.0
-	github.com/shoenig/loggy v0.0.0
-	go.gophers.dev/cmds/petrify/v5 v5.0.1
+	gophers.dev/cmds/petrify/v5 v5.2.1
+	gophers.dev/pkgs/extractors v0.2.0
+	gophers.dev/pkgs/loggy v0.2.0
 )

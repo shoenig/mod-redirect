@@ -5,7 +5,7 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/shoenig/mod-redirect/internal/store"
+	"gophers.dev/cmds/mod-redirect/internal/store"
 )
 
 const (

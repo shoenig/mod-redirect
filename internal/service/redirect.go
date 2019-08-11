@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/shoenig/loggy"
-	"github.com/shoenig/mod-redirect/config"
-	"github.com/shoenig/mod-redirect/internal/store"
+	"gophers.dev/pkgs/loggy"
+	"gophers.dev/cmds/mod-redirect/config"
+	"gophers.dev/cmds/mod-redirect/internal/store"
 )
 
 type Redirect struct {

@@ -9,12 +9,12 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/shoenig/mod-redirect/config"
-	"github.com/shoenig/mod-redirect/internal/service"
+	"gophers.dev/cmds/mod-redirect/config"
+	"gophers.dev/cmds/mod-redirect/internal/service"
 )
 
 // generate HTML static file(s)
-//go:generate go run go.gophers.dev/cmds/petrify/v5/cmd/petrify -prefix ../../ -o ../../static/generated.go -pkg static ../../static/...
+//go:generate go run gophers.dev/cmds/petrify/v5/cmd/petrify -prefix ../../ -o ../../static/generated.go -pkg static ../../static/...
 
 func main() {
 	flagSet := flag.NewFlagSet("configuration-flags", flag.ExitOnError)

@@ -8,8 +8,8 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/shoenig/mod-redirect/internal/store"
-	"github.com/shoenig/mod-redirect/internal/web"
+	"gophers.dev/cmds/mod-redirect/internal/store"
+	"gophers.dev/cmds/mod-redirect/internal/web"
 )
 
 type initer func(*Redirect) error
