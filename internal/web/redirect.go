@@ -6,11 +6,12 @@ import (
 	"html/template"
 	"net/http"
 
-	"gophers.dev/pkgs/extractors/urlpath"
-	"gophers.dev/pkgs/loggy"
 	"gophers.dev/cmds/mod-redirect/internal/mods"
 	"gophers.dev/cmds/mod-redirect/internal/store"
 	"gophers.dev/cmds/mod-redirect/static"
+
+	"gophers.dev/pkgs/extractors/urlpath"
+	"gophers.dev/pkgs/loggy"
 )
 
 type redirectPage struct {

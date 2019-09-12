@@ -8,6 +8,7 @@ import (
 	mm_time "time"
 
 	"github.com/gojuno/minimock/v3"
+
 	"gophers.dev/cmds/mod-redirect/internal/mods"
 )
 

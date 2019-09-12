@@ -4,9 +4,10 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"gophers.dev/pkgs/loggy"
 	"gophers.dev/cmds/mod-redirect/internal/mods"
 	"gophers.dev/cmds/mod-redirect/internal/store"
+
+	"gophers.dev/pkgs/loggy"
 )
 
 type newEP struct {

@@ -5,7 +5,9 @@ import (
 	"time"
 
 	"github.com/boltdb/bolt"
+
 	"github.com/pkg/errors"
+
 	"gophers.dev/cmds/mod-redirect/internal/mods"
 )
 

@@ -5,8 +5,9 @@ import (
 	"errors"
 	"net/http"
 
-	"gophers.dev/pkgs/loggy"
 	"gophers.dev/cmds/mod-redirect/internal/store"
+
+	"gophers.dev/pkgs/loggy"
 )
 
 type listEP struct {
