@@ -20,6 +20,10 @@ func Set(
 	checker *SharedKey,
 ) {
 
+	// health endpoint
+	router.Handle("/health", newHealthEP()).Methods(get)
+
+	// api endpoints
 	router.Handle("/v1/set", setter(storage, checker))
 	router.Handle("/v1/list", newListEP(storage)).Methods(get)
 
