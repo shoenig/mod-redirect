@@ -1,6 +1,6 @@
 module gophers.dev/cmds/mod-redirect
 
-go 1.12
+go 1.16
 
 require (
 	github.com/boltdb/bolt v1.3.1
