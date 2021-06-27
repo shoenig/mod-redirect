@@ -6,6 +6,16 @@ import (
 	"strings"
 )
 
+type Redirects []*Redirection
+
+func (rs Redirects) Copy() Redirects {
+	c := make(Redirects, len(rs))
+	for i := 0; i < len(rs); i++ {
+		c[i] = rs[i].Copy()
+	}
+	return c
+}
+
 // Redirection is the representation of a go-get redirect that should be
 // observed by a requesting entity (e.g. the Go compiler).
 type Redirection struct {
@@ -67,4 +77,13 @@ func (r *Redirection) Bytes() []byte {
 		panic(err)
 	}
 	return bs
+}
+
+func (r *Redirection) Copy() *Redirection {
+	return &Redirection{
+		Kind:        r.Kind,
+		Namespace:   r.Namespace,
+		VCS:         r.VCS,
+		Destination: r.Destination,
+	}
 }

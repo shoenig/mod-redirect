@@ -30,10 +30,7 @@ func (h *listEP) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *listEP) get(r *http.Request) (int, error) {
-	redirects, err := h.store.List()
-	if err != nil {
-		return http.StatusInternalServerError, err
-	}
+	redirects := h.store.List()
 
 	bs, err := json.Marshal(redirects)
 	if err != nil {

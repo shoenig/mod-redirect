@@ -9,22 +9,19 @@ import (
 )
 
 const (
-	get  = http.MethodGet
-	post = http.MethodPost
+	get = http.MethodGet
 )
 
 func Set(
 	router *mux.Router,
 	domain string,
 	storage store.Storage,
-	checker *SharedKey,
 ) {
 
 	// health endpoint
 	router.Handle("/health", newHealthEP()).Methods(get)
 
 	// api endpoints
-	router.Handle("/v1/set", setter(storage, checker))
 	router.Handle("/v1/list", newListEP(storage)).Methods(get)
 
 	// namespace something like pkgs, cmds, src, etc.
@@ -32,9 +29,9 @@ func Set(
 	router.Handle(`/{namespace}/{module:[a-zA-Z0-9/_-]+}`, newRedirectEP(domain, storage)).Methods(get)
 }
 
-func setter(storage store.Storage, checker *SharedKey) http.Handler {
-	sub := mux.NewRouter()
-	sub.Use(checker.CheckKey)
-	sub.Handle("/v1/set", newNewEP(storage)).Methods(post)
-	return sub
+func msg(err error) string {
+	if err != nil {
+		return err.Error()
+	}
+	return "ok"
 }

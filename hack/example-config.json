@@ -1,20 +1,182 @@
 {
-	"redirects": {
-		"domain": "example.com"
+    "domain": "example.com",
+
+    "web_server": {
+	"bind_address": "0.0.0.0",
+	"port": 9900,
+	"read_timeout_ms": 3000,
+	"write_timeout_ms": 3000
+    },
+    
+    "modules": 
+    [
+	{
+	    "kind": "cmds",
+	    "namespace": "bcrypt-tool",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/bcrypt-tool"
 	},
-	"web_server": {
-		"bind_address": "0.0.0.0",
-		"port": 8080,
-		"read_timeout_ms": 3000,
-		"write_timeout_ms": 3000
+	{
+	    "kind": "cmds",
+	    "namespace": "commando",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/commando"
 	},
-	"authentication": {
-		"header": "X-MR-Key",
-		"keys": ["abc123", "passw0rd"]
+	{
+	    "kind": "cmds",
+	    "namespace": "consul-socket",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/consul-socket"
 	},
-	"storage": {
-		"boltdb": {
-			"filepath": "/tmp/mod-redirect.test.db"
-		}
+	{
+	    "kind": "cmds",
+	    "namespace": "doughboy",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/doughboy"
+	},
+	{
+	    "kind": "cmds",
+	    "namespace": "envy",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/envy"
+	},
+	{
+	    "kind": "cmds",
+	    "namespace": "fields",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/fields"
+	},
+	{
+	    "kind": "cmds",
+	    "namespace": "hclfmt-web",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/hclfmt-web"
+	},
+	{
+	    "kind": "cmds",
+	    "namespace": "mod-redirect",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/mod-redirect"
+	},
+	{
+	    "kind": "cmds",
+	    "namespace": "petrify",
+	    "vcs": "git",
+	    "destination": "https://example.com"
+	},
+	{
+	    "kind": "cmds",
+	    "namespace": "petrify/v5",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/petrify"
+	},
+	{
+	    "kind": "cmds",
+	    "namespace": "simple-http",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/simple-http"
+	},
+	{
+	    "kind": "cmds",
+	    "namespace": "ssh-key-sync",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/ssh-key-sync"
+	},
+	{
+	    "kind": "cmds",
+	    "namespace": "uuid-tool",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/uuid-tool"
+	},
+	{
+	    "kind": "cmds",
+	    "namespace": "weather",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/weather"
+	},
+	{
+	    "kind": "pkgs",
+	    "namespace": "atomicfs",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/atomicfs"
+	},
+	{
+	    "kind": "pkgs",
+	    "namespace": "consulapi",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/consulapi"
+	},
+	{
+	    "kind": "pkgs",
+	    "namespace": "counting",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/counting"
+	},
+	{
+	    "kind": "pkgs",
+	    "namespace": "extractors",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/extractors"
+	},
+	{
+	    "kind": "pkgs",
+	    "namespace": "human",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/human"
+	},
+	{
+	    "kind": "pkgs",
+	    "namespace": "ignore",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/ignore"
+	},
+	{
+	    "kind": "pkgs",
+	    "namespace": "javapropio",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/javapropio"
+	},
+	{
+	    "kind": "pkgs",
+	    "namespace": "loggy",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/loggy"
+	},
+	{
+	    "kind": "pkgs",
+	    "namespace": "offheap",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/offheap"
+	},
+	{
+	    "kind": "pkgs",
+	    "namespace": "regexplus",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/regexplus"
+	},
+	{
+	    "kind": "pkgs",
+	    "namespace": "repeat",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/repeat"
+	},
+	{
+	    "kind": "pkgs",
+	    "namespace": "secrets",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/secrets"
+	},
+	{
+	    "kind": "pkgs",
+	    "namespace": "semantic",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/semantic"
+	},
+	{
+	    "kind": "pkgs",
+	    "namespace": "yahoo-finance",
+	    "vcs": "git",
+	    "destination": "https://github.com/shoenig/yahoo-finance"
 	}
+    ]
 }

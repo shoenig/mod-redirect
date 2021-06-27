@@ -3,7 +3,6 @@
 set -euo pipefail
 
 go generate
-go build
 
-./mod-redirect --config ../../hack/example-config.json
+go run main.go --config ../../hack/example-config.json
 

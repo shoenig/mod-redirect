@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"net/http"
 	"time"
+
+	"gophers.dev/cmds/mod-redirect/internal/mods"
 )
 
 var (
@@ -18,19 +20,9 @@ const (
 )
 
 type Configuration struct {
-	Redirects      Redirects      `json:"redirects"`
-	WebServer      WebServer      `json:"web_server"`
-	Authentication Authentication `json:"authentication"`
-	Storage        Storage        `json:"storage"`
-}
-
-type Redirects struct {
-	Domain string `json:"domain"`
-}
-
-type Authentication struct {
-	Header string   `json:"header"`
-	Keys   []string `json:"keys"`
+	Domain    string         `json:"domain"`
+	WebServer WebServer      `json:"web_server"`
+	Modules   mods.Redirects `json:"modules"`
 }
 
 type WebServer struct {
@@ -77,13 +69,4 @@ func (s WebServer) Server(mux http.Handler) (*http.Server, error) {
 
 func ms(ms int) time.Duration {
 	return time.Duration(ms) * time.Millisecond
-}
-
-type Storage struct {
-	// Use a boltdbf file as the persistent store
-	BoltDB BoltDB `json:"boltdb,omitempty"`
-}
-
-type BoltDB struct {
-	Filepath string `json:"filepath"`
 }

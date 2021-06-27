@@ -2,7 +2,6 @@ package service
 
 import (
 	"net/http"
-	"os"
 
 	"github.com/gorilla/mux"
 
@@ -15,33 +14,21 @@ import (
 type initer func(*Redirect) error
 
 func initStore(r *Redirect) error {
-	fPath := r.config.Storage.BoltDB.Filepath
-	r.log.Tracef("setting up boltdb with path %s", fPath)
-	boltDB, err := store.NewBoltDB(fPath)
-	if err != nil {
-		return errors.Wrap(err, "unable to create boltdb store")
-	}
-	r.storage = boltDB
+	r.storage = store.New(r.config.Modules)
+	r.log.Tracef("init store with %d modules", len(r.storage.List()))
 	return nil
 }
 
 func initWeb(r *Redirect) error {
 	r.log.Tracef("setting up web server @ %s", r.config.WebServer.Address())
 
-	domain := r.config.Redirects.Domain
+	domain := r.config.Domain
 	if domain == "" {
 		return errors.New("domain must be specified")
 	}
 
-	header := r.config.Authentication.Header
-	keys := r.config.Authentication.Keys
-	sk := web.NewSharedKey(header, keys)
-	if header == "" {
-		return errors.New("header must be specified")
-	}
-
 	router := mux.NewRouter()
-	web.Set(router, domain, r.storage, sk)
+	web.Set(router, domain, r.storage)
 
 	server, err := r.config.WebServer.Server(router)
 	if err != nil {
@@ -49,9 +36,7 @@ func initWeb(r *Redirect) error {
 	}
 
 	go func(h http.Handler) {
-		err := server.ListenAndServe()
-		r.log.Errorf("server stopped serving: %v", err)
-		os.Exit(1)
+		panic(server.ListenAndServe())
 	}(router)
 
 	return nil
