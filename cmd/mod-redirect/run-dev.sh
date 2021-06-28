@@ -4,5 +4,5 @@ set -euo pipefail
 
 go generate
 
-go run main.go --config ../../hack/example-config.json
+PORT=9800 go run main.go --config ../../hack/example-config.json
 

@@ -1,12 +1,15 @@
 package service
 
 import (
+	"errors"
+	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/hashicorp/consul/connect"
 
-	"github.com/pkg/errors"
-
+	"gophers.dev/cmds/mod-redirect/config"
 	"gophers.dev/cmds/mod-redirect/internal/store"
 	"gophers.dev/cmds/mod-redirect/internal/web"
 )
@@ -20,7 +23,8 @@ func initStore(r *Redirect) error {
 }
 
 func initWeb(r *Redirect) error {
-	r.log.Tracef("setting up web server @ %s", r.config.WebServer.Address())
+	address := config.Address()
+	r.log.Tracef("setting up web service %s @ %s", config.Service(), address)
 
 	domain := r.config.Domain
 	if domain == "" {
@@ -30,13 +34,22 @@ func initWeb(r *Redirect) error {
 	router := mux.NewRouter()
 	web.Set(router, domain, r.storage)
 
-	server, err := r.config.WebServer.Server(router)
+	service := config.Service()
+	consul := config.Consul()
+	cs, err := connect.NewService(service, consul)
 	if err != nil {
-		return errors.Wrap(err, "could not create web server")
+		return fmt.Errorf("unable to create consul service: %w", err)
 	}
 
 	go func(h http.Handler) {
-		panic(server.ListenAndServe())
+		panic((&http.Server{
+			Addr:              address,
+			Handler:           router,
+			TLSConfig:         cs.ServerTLSConfig(),
+			ReadTimeout:       1 * time.Second,
+			ReadHeaderTimeout: 1 * time.Second,
+			WriteTimeout:      1 * time.Second,
+		}).ListenAndServeTLS("", ""))
 	}(router)
 
 	return nil
