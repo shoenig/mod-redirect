@@ -18,7 +18,7 @@ responding with custom redirects to `?go-get=1` from Go compilers / proxies.
 
 The `mod-redirect` package can be installed by running
 ```bash
-$ go get gophers.dev/cmds/mod-redirect/cmd/mod-redirect
+$ go install gophers.dev/cmds/mod-redirect/cmd/mod-redirect@latest
 ```
 
 # Example Usage
